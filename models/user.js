@@ -1,4 +1,5 @@
 import database from "infra/database.js";
+import password from "models/password.js";
 import { ValidationError, NotFoundError } from "infra/errors.js";
 
 async function findOneByUsername(username) {
@@ -33,6 +34,7 @@ async function findOneByUsername(username) {
 async function create(userInputValues) {
   await validateUniqueEmail(userInputValues.email);
   await validateUniqueUsername(userInputValues.username);
+  await hashPasswordInObject(userInputValues);
 
   const newUser = await runInsertQuery(userInputValues);
   return newUser;
@@ -56,6 +58,7 @@ async function create(userInputValues) {
       });
     }
   }
+
   async function validateUniqueUsername(username) {
     const result = await database.query({
       text: `
@@ -75,6 +78,12 @@ async function create(userInputValues) {
       });
     }
   }
+
+  async function hashPasswordInObject(userInputValues) {
+    const hashPassword = await password.hash(userInputValues.password); // secretlint-disable-line @secretlint/secretlint-rule-pattern
+    userInputValues.password = hashPassword; // secretlint-disable-line @secretlint/secretlint-rule-pattern
+  }
+
   async function runInsertQuery(userInputValues) {
     const result = await database.query({
       text: `
