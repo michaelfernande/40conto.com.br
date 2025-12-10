@@ -76,6 +76,27 @@ export class NotFoundError extends Error {
     };
   }
 }
+export class ConfigurationError extends Error {
+  constructor({ cause, message, action }) {
+    super(message || "Não foi possivel encontrar este recurso no sistema.", {
+      cause,
+    });
+    this.name = "ConfigurationError";
+    this.action =
+      action ||
+      "Variável de ambiente 'DATABASE_PEPPER' não presente no sistema.";
+    this.statusCode = 404;
+  }
+
+  toJSON() {
+    return {
+      name: this.name,
+      message: this.message,
+      action: this.action,
+      status_code: this.statusCode,
+    };
+  }
+}
 export class MethodNotAllowedError extends Error {
   constructor() {
     super("Método não permitido para esse endpoint.");
