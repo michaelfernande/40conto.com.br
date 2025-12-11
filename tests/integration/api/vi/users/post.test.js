@@ -27,6 +27,7 @@ describe("POST /api/v1/users", () => {
       expect(response.status).toBe(201);
 
       const responseBody = await response.json();
+
       expect(responseBody).toEqual({
         id: responseBody.id,
         username: "testeNome",
@@ -86,7 +87,7 @@ describe("POST /api/v1/users", () => {
       expect(response2Body).toEqual({
         name: "ValidationError",
         message: "Dados ultilizados são invalidos",
-        action: "Utilize outro email ou usuário para realizar o cadastro",
+        action: "Utilize outro email ou usuário para está operação.",
         status_code: 400,
       });
     });
@@ -123,7 +124,7 @@ describe("POST /api/v1/users", () => {
       expect(response2Body).toEqual({
         name: "ValidationError",
         message: "Dados ultilizados são invalidos",
-        action: "Utilize outro email ou usuário para realizar o cadastro",
+        action: "Utilize outro email ou usuário para está operação.",
         status_code: 400,
       });
     });
