@@ -3,6 +3,11 @@ dotenv.config({
   path: ".env.development",
 });
 
+dotenv.config({
+  path: ".env.local",
+  override: true,
+});
+
 const nextJest = require("next/jest");
 
 const createJestConfig = nextJest({
