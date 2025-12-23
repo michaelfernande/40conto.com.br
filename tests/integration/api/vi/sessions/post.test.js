@@ -90,7 +90,7 @@ describe("POST /api/v1/sessions", () => {
         status_code: 401,
       });
     });
-    test("With correct 'email' but correct `password`", async () => {
+    test("With correct 'email' and correct `password`", async () => {
       const createdUser = await orchestrator.createUser({
         email: "tudo.correto@gmail.com",
         password: "tudo-correto",
